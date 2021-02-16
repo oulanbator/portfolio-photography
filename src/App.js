@@ -6,19 +6,6 @@ import './styles.css';
 import './gallery.css';
 
 SwiperCore.use([Navigation])
-const SOURCES = [
-  {title: "Image 1", src: "images/img-1.jpg"},
-  {title: "Image 2", src: "images/img-2.jpg"},
-  {title: "Image 3", src: "images/img-3.jpg"},
-  {title: "Image 4", src: "images/img-4.jpg"},
-  {title: "Image 5", src: "images/img-5.jpg"},
-  {title: "Image 6", src: "images/img-6.jpg"},
-  {title: "Image 7", src: "images/img-7.jpg"},
-  {title: "Image 8", src: "images/img-8.jpg"},
-  {title: "Image 9", src: "images/img-9.jpg"},
-  {title: "Image 10", src: "images/img-10.png"},
-  {title: "Image 11", src: "images/photographer.jpg"}
-]
 
 function Slides (sources) {
   const slides = [];
@@ -123,7 +110,6 @@ function blocksSlicer (sources, map) {
   return galleryBlocks
 }
 
-
 class ImageMarkup extends React.Component {
   constructor (props) {
     super(props)
@@ -175,8 +161,6 @@ class Block extends React.Component {
   }
 }
 
-let IMAGEINDEX = 0
-
 class Gallery extends React.Component {
   constructor (props) {
     super(props)
@@ -188,6 +172,7 @@ class Gallery extends React.Component {
     }
     this.handleImageClick = this.handleImageClick.bind(this)
   }
+
   componentDidMount() {
     const {sources} = this.props
     const map = galleryMapper(sources)
@@ -218,9 +203,20 @@ class Gallery extends React.Component {
   }
 }
 
-function App() {
+function App({galleryTitle}) {
+  const [sources, setSources] = React.useState([])
+  const [loading, setLoading] = React.useState(true)
   const [displaySwiper, setDisplaySwiper] = React.useState(false)
   const [imageToShow, setImageToShow] = React.useState('0')
+
+  React.useEffect(() => {
+    const url = "/gallery/" + galleryTitle
+    fetch('/gallery/Mariages').then(res => res.json()).then(data => {
+      setSources(data)
+      setLoading(false)
+    });
+  }, []);
+  console.log(sources)
 
   const handleSwiper = (e) => {
     setDisplaySwiper(true)
@@ -229,10 +225,14 @@ function App() {
   const hideSwiper = (e) => {
     setDisplaySwiper(false)
   }
-  return <div>
-    { displaySwiper && (<SwiperBox sources={SOURCES} activeIndex={imageToShow} onCloseCall={hideSwiper}/>)}
-    <Gallery sources={SOURCES} onSwiperCall={handleSwiper}/>
-  </div>
+  if (loading) {
+    return <h1>Chargement...</h1>
+  } else {
+    return <div>
+      { displaySwiper && (<SwiperBox sources={sources} activeIndex={imageToShow} onCloseCall={hideSwiper}/>)}
+      <Gallery sources={sources} onSwiperCall={handleSwiper}/>
+    </div>
+  }
 }
 
 export default App;

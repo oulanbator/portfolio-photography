@@ -28,3 +28,4 @@ env
 /api/env
 __pycache__
 /api/__pycache__
+/api/database.sqlite
