@@ -1,5 +1,5 @@
 /* GLOBAL CSS */
-*,
+/* *,
 *::before,
 *::after{
     margin: 0;
@@ -21,12 +21,12 @@ body{
     max-width: 120rem;
     margin: auto;
     padding: 0 1.5rem;
-}
+} */
 .gallery{
     display: grid;
     grid-template-rows: auto;
-    grid-gap: 1.5rem;
-    padding-bottom: 1.5rem;
+    grid-gap: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 .gallery a{
     width: 100%;
@@ -109,10 +109,10 @@ body{
             'img-7 img-7 img-8 img-6';
 }
 .block8 a.img-1{
-    min-height: 51.5rem;
+    min-height: 50.5rem;
 }
 .block8 a.img-6{
-    min-height: 51.5rem;
+    min-height: 50.5rem;
 }
 /* 4 BLOC */
 .block4{
@@ -122,7 +122,7 @@ body{
             'img-1 img-3 img-4';
 }
 .block4 a.img-1{
-    min-height: 51.5rem;
+    min-height: 50.5rem;
 }
 /* 2 BLOC */
 .block2{
@@ -154,7 +154,7 @@ body{
             'img-8 img-8 img-8 img-8';
     }
     .block8 a.img-1{
-        min-height: 41.5rem;
+        min-height: 40.5rem;
     }
     .block8 a.img-6{
         min-height: 20rem;
@@ -168,7 +168,7 @@ body{
                 'img-4 img-4 img-4 img-4';
     }
     .block4 a.img-1{
-        min-height: 41.5rem;
+        min-height: 40.5rem;
     }
 }
 /* *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-* */
@@ -250,6 +250,7 @@ body{
     text-align: center;
 }
 .swiper-slide img{
-    max-height: 100vh;
-    max-width: 100%;
+    top: 1vh;
+    max-height: 98vh;
+    max-width: 98%;
 }

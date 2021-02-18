@@ -1,8 +1,4 @@
-import Contact from './components/Contact';
-import Home from './components/Home';
-
-import './styles.css';
-
+import * as React from 'react'
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,29 +6,44 @@ import {
     NavLink
   } from 'react-router-dom';
 
+import Home from './components/Home';
+import Gallery from './components/Gallery';
+import Contact from './components/Contact';
+import './styles.css';
+
 function App() {
     return (
-      <div className="App">
+      <React.Fragment>
         <Router>
-            <nav>
-                <ul>
-                    <li>
+            <header className="mb-auto">
+                <div>
+                    <h3 className="float-md-start mb-0">Portfolio Photographie</h3>
+                    <nav className="nav nav-masthead justify-content-center float-md-end">
                         <NavLink 
+                            className="nav-link"
                             exact to="/" 
-                            activeClassName="selected">
+                            activeClassName="active">
                             Home
                         </NavLink>
-                    </li>
-                    <li>
                         <NavLink 
+                            className="nav-link"
+                            to="/gallery" 
+                            activeClassName="active">
+                            Gallery
+                        </NavLink>
+                        <NavLink 
+                            className="nav-link"
                             to="/contact" 
-                            activeClassName="selected">
+                            activeClassName="active">
                             Contact
                         </NavLink>
-                    </li>
-                </ul>
-            </nav>
+                    </nav>
+                </div>
+            </header>
             <Switch>
+                <Route path="/gallery">
+                    <Gallery />
+                </Route>
                 <Route path="/contact">
                     <Contact />
                 </Route>
@@ -40,8 +51,11 @@ function App() {
                     <Home />
                 </Route>
             </Switch>
+            <footer className="mt-auto text-white-50">
+                <p>Cover template for <a href="https://getbootstrap.com/" className="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+            </footer>
         </Router>
-      </div>
+      </React.Fragment>
     );
   }
 
