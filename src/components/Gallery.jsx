@@ -188,11 +188,21 @@ function GalleryGrid ({sources, onSwiperCall}) {
 }
 
 // Put all together (Grid layout and LightBox)
-function Gallery({picsumStartId = 11, numberOfImages = 23}) {
+function Gallery({galleryTitle}) {
   const [displaySwiper, setDisplaySwiper] = React.useState(false)
   const [imageToShow, setImageToShow] = React.useState('0')
-  
-  const SOURCES = buildSources(picsumStartId, numberOfImages)
+  const [sources, setSources] = React.useState([])
+  const [loading, setLoading] = React.useState(true)
+
+  // const SOURCES = buildSources(picsumStartId, numberOfImages)
+
+  React.useEffect(() => {
+    const url = "/api/gallery/" + galleryTitle
+    fetch(url).then(res => res.json()).then(data => {
+      setSources(data)
+      setLoading(false)
+    });
+  }, []);
 
   const showSwiper = (e) => {
     setDisplaySwiper(true)
@@ -203,12 +213,16 @@ function Gallery({picsumStartId = 11, numberOfImages = 23}) {
     setDisplaySwiper(false)
   }
 
-  return <div>
+  if (loading) {
+    return <h1>Chargement...</h1>
+  } else {
+    return <div>
       { displaySwiper && (<SwiperBox 
-            sources={SOURCES} 
+            sources={sources} 
             activeIndex={imageToShow}
             // onKeyPress={handleKeyPress}
             onCloseCall={hideSwiper}/>)}
-      <GalleryGrid sources={SOURCES} onSwiperCall={showSwiper}/>
+      <GalleryGrid sources={sources} onSwiperCall={showSwiper}/>
     </div>
+  }
 }

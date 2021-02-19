@@ -1,5 +1,13 @@
 /* CUSTOM CSS */
 
+#DropZone {
+  margin-bottom: 2rem;
+}
+
+.Upload h1 {
+  color: grey;
+}
+
 .Home {
   color: red;
   /* border: blanchedalmond solid; */
@@ -94,3 +102,5 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
+
+

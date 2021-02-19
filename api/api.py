@@ -1,11 +1,14 @@
 import time
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import json
 from config import Config
+from PIL import Image as PilImage
+import secrets, os
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -58,11 +61,11 @@ class Gallery(db.Model):
     
 # sources_js = json.dumps(SOURCES)
 
-def inject_sources(SOURCES):
-    for line in SOURCES:
-        img = Image(title=line.get("title"), source=line.get("src"))
-        db.session.add(img)
-        db.session.commit()
+# def inject_sources(SOURCES):
+#     for line in SOURCES:
+#         img = Image(title=line.get("title"), source=line.get("src"))
+#         db.session.add(img)
+#         db.session.commit()
 
 def get_gallery_sources(galleryName):
     dbGallery = Gallery.query.filter_by(title=galleryName).first()
@@ -74,9 +77,52 @@ def get_gallery_sources(galleryName):
         dbSources.append(imgDict)
     return dbSources
 
+# ROUTES 
 
-@app.route('/gallery/<name>')
-def get_current_time(name):
-    sources = get_gallery_sources('Mariages')
+@app.route('/api/gallery/<name>')
+def get_gallery(name):
+    sources = get_gallery_sources(name)
     sources_js = json.dumps(sources)
     return sources_js
+
+@app.route('/medias')
+def get_medias():
+    db_medias = Image.query.all()
+    dbSources = []
+    for img in db_medias:
+        title = img.title
+        src = img.source
+        imgDict = {"title": title, "src": src}
+        dbSources.append(imgDict)
+    sources_js = json.dumps(dbSources)
+    return sources_js
+
+@app.route('/api/uploadFile', methods=['GET', 'POST'])
+def uploadFile():
+    if request.method == "POST":
+        for i in request.files:
+            form_picture = request.files[str(i)]
+            # Create hexa filename
+            random_hex = secrets.token_hex(8)
+            # Get extension of the file
+            _, f_ext = os.path.splitext(form_picture.filename)
+            # build new filename
+            picture_filename = random_hex + f_ext
+            # Build path
+            # picture_path = os.path.join(current_app.root_path, "static/profile_pics", picture_fn)
+            picture_path = os.path.join("../public/images/", picture_filename)
+            # Resize image
+            output_size = (600, 600)
+            img = PilImage.open(form_picture)
+            img.thumbnail(output_size)
+            # Save image in filesystem
+            img.save(picture_path)
+            print("file saved !")
+            # add to database
+            db_picture_path = os.path.join("images/", picture_filename)
+            db_image = Image(source=db_picture_path)
+            db.session.add(db_image)
+            # COMMIT OUTSIDE OF THE LOOP ?
+            db.session.commit()
+        return "True"
+    

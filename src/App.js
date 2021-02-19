@@ -8,7 +8,8 @@ import {
 
 import Home from './components/Home';
 import Gallery from './components/Gallery';
-import Contact from './components/Contact';
+import Upload from './components/Upload';
+import Medias from './components/Medias';
 import './styles.css';
 
 function App() {
@@ -33,26 +34,35 @@ function App() {
                         </NavLink>
                         <NavLink 
                             className="nav-link"
-                            to="/contact" 
+                            to="/medias" 
                             activeClassName="active">
-                            Contact
+                            Medias
+                        </NavLink>
+                        <NavLink 
+                            className="nav-link"
+                            to="/upload" 
+                            activeClassName="active">
+                            Upload
                         </NavLink>
                     </nav>
                 </div>
             </header>
             <Switch>
                 <Route path="/gallery">
-                    <Gallery />
+                    <Gallery galleryTitle="Mariages"/>
                 </Route>
-                <Route path="/contact">
-                    <Contact />
+                <Route path="/upload">
+                    <Upload />
+                </Route>
+                <Route path="/medias">
+                    <Medias />
                 </Route>
                 <Route path="/">
                     <Home />
                 </Route>
             </Switch>
             <footer className="mt-auto text-white-50">
-                <p>Cover template for <a href="https://getbootstrap.com/" className="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
+                <p>Full React Photography Portfolio, by Totor.</p>
             </footer>
         </Router>
       </React.Fragment>
