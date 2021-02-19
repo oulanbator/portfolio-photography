@@ -25,6 +25,17 @@ class Image(db.Model):
     source = db.Column(db.String, unique=True, nullable=False)
     title = db.Column(db.String)
 
+    def is_used(self):
+        i = 0
+        galleries = []
+        for gallery in self.galleries:
+            galleries.append(gallery.title)
+            i += 1
+        if i > 0:
+            return galleries
+        else:
+            return False
+
 class Gallery(db.Model):
     __tablename__ = 'gallery'
     id = db.Column(db.Integer, primary_key=True)
@@ -85,7 +96,7 @@ def get_gallery(name):
     sources_js = json.dumps(sources)
     return sources_js
 
-@app.route('/medias')
+@app.route('/api/medias')
 def get_medias():
     db_medias = Image.query.all()
     dbSources = []
@@ -96,6 +107,27 @@ def get_medias():
         dbSources.append(imgDict)
     sources_js = json.dumps(dbSources)
     return sources_js
+
+@app.route('/api/medias/delete/<filename>')
+def delete_media(filename):
+    # Delete image from database
+    path = "images/" + filename
+    media = Image.query.filter_by(source=path).first()
+    # If media is used in one or more galleries, return json with status and the list 
+    if media.is_used():
+        responseDict = {
+            "status": "aborted",
+            "galleries": media.is_used()
+        }
+        return json.dumps(responseDict)
+    # Else, proceed
+    else:
+        db.session.delete(media)
+        db.session.commit()
+        # Delete image from filesystem
+        os_path = "../public/images/" + filename
+        os.remove(os_path)
+        return json.dumps({"status": "success"})
 
 @app.route('/api/uploadFile', methods=['GET', 'POST'])
 def uploadFile():
