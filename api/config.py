@@ -12,6 +12,7 @@ with open(filepath) as config_file:
 class Config():
     SECRET_KEY = config.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = config.get('SQLALCHEMY_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = config.get('SQLALCHEMY_TRACK_MODIFICATIONS')
     #CONFIGURATION D'UN COMPTE MAIL DANS NOTRE APP !
     # MAIL_SERVER = 'smtp.googlemail.com' # smtp.gmail.com ?
     # MAIL_PORT = 587 # 465 ?
