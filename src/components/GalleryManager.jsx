@@ -57,7 +57,7 @@ function Manager () {
 
     //  COMPONENT MOUNT
     React.useEffect(() => {
-        const url = "/api/galleries"
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/galleries"
         fetch(url).then(res => res.json()).then(data => {
             setGalleries(data)
             setLoading(false)
@@ -76,7 +76,7 @@ function Manager () {
     }
         // Global
     const handleCreateNewGallery = () => {
-        const url = "http://localhost:5000/api/createGallery?title=" + titleValue + "&firstImage=" + imageValue
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/createGallery?title=" + titleValue + "&firstImage=" + imageValue
         handleClose()
         fetch(url).then(res => res.json()).then(data => {
             console.log(data.status)
@@ -88,7 +88,7 @@ function Manager () {
         });
     }
     const handleDeleteGallery = (title) => {
-        const url = "http://localhost:5000/api/deleteGallery/" + title
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/deleteGallery/" + title
         fetch(url).then(res => res.json()).then(data => {
             console.log(data.status)
             if (data.status === "success") {

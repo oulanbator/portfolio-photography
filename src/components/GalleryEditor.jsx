@@ -103,7 +103,7 @@ function GalleryEditor ({title, onCancel}) {
     const [loading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
-        const url = "/api/gallery/" + title
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/gallery/" + title
         fetch(url).then(res => res.json()).then(data => {
             let sources = [] 
             data.forEach(img => {
@@ -113,14 +113,14 @@ function GalleryEditor ({title, onCancel}) {
         });
     }, []);
     React.useEffect(() => {
-        const url = "/api/galleryInfo/" + title
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/galleryInfo/" + title
         fetch(url).then(res => res.json()).then(data => {
             setDescription(data.description)
             setCover(data.firstImage)
         });
     }, []);
     React.useEffect(() => {
-        const url = "/api/medias"
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/medias"
         fetch(url).then(res => res.json()).then(data => {
             let sources = [] 
             data.forEach(img => {
@@ -169,7 +169,7 @@ function GalleryEditor ({title, onCancel}) {
         }
         form.append("images", galleryImages)
         request.onreadystatechange = checkStatus
-        request.open("POST", "/api/saveGallery")
+        request.open("POST", "http://portfolio-photographie-api.herokuapp.com/api/saveGallery")
         request.send(form)
         console.log("save")
     }

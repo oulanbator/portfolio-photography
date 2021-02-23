@@ -203,7 +203,7 @@ function Gallery({galleryTitle}) {
   // const SOURCES = buildSources(picsumStartId, numberOfImages)
 
   React.useEffect(() => {
-    const url = "/api/gallery/" + galleryTitle
+    const url = "http://portfolio-photographie-api.herokuapp.com/api/gallery/" + galleryTitle
     fetch(url).then(res => res.json()).then(data => {
       setSources(data)
       setLoading(false)

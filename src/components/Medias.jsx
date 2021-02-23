@@ -37,7 +37,7 @@ function Medias () {
     const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
-        const url = "/api/medias"
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/medias"
         fetch(url).then(res => res.json()).then(data => {
             setMedias(data)
             setLoading(false)
@@ -47,7 +47,7 @@ function Medias () {
     const handleDelete = (source) => {
         console.log(source)
         // const filename = source.replace("images/", "")
-        const url = "/api/medias/delete/" + source
+        const url = "http://portfolio-photographie-api.herokuapp.com/api/medias/delete/" + source
         fetch(url).then(res => res.json()).then(data => {
             if (data.status === "success") {
                 let mediaList = [...medias]

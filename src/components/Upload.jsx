@@ -124,7 +124,7 @@ function FileUpload () {
     }
     
     request.onreadystatechange = checkStatus
-    request.open("POST", "/api/uploadFile")
+    request.open("POST", "http://portfolio-photographie-api.herokuapp.com/api/uploadFile")
     request.send(form)
   }
   if (loading) {
