@@ -30,7 +30,7 @@ function GalleryBlock ({source, onDelete, onEdit}) {
         onEdit(source.title)
     }
     // console.log(source)
-    const url = "http://portfolio-photographie-api.herokuapp.com/images/" + source.firstImage
+    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + source.firstImage
     const altText = "Gallery " + source.title + " - Cover Thumbnail"
     return <li>
             <img src={url} alt={altText} />
@@ -57,7 +57,7 @@ function Manager () {
 
     //  COMPONENT MOUNT
     React.useEffect(() => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/galleries"
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/galleries"
         fetch(url).then(res => res.json()).then(data => {
             setGalleries(data)
             setLoading(false)
@@ -76,7 +76,7 @@ function Manager () {
     }
         // Global
     const handleCreateNewGallery = () => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/createGallery?title=" + titleValue + "&firstImage=" + imageValue
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/createGallery?title=" + titleValue + "&firstImage=" + imageValue
         handleClose()
         fetch(url).then(res => res.json()).then(data => {
             console.log(data.status)
@@ -88,7 +88,7 @@ function Manager () {
         });
     }
     const handleDeleteGallery = (title) => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/deleteGallery/" + title
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/deleteGallery/" + title
         fetch(url).then(res => res.json()).then(data => {
             console.log(data.status)
             if (data.status === "success") {

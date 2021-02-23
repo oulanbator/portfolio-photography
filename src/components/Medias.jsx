@@ -24,7 +24,7 @@ function ImageBlock ({element, onDelete}) {
         copyToClipboard(element.src)
     }
 
-    const url = "http://portfolio-photographie-api.herokuapp.com/images/" + element.src
+    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + element.src
     return <li>
         <img src={url} alt={element.title}/>
         <a href="#" onClick={handleDeleteClick} title="Delete Image"><i className="fas fa-times-circle"></i></a>
@@ -37,7 +37,7 @@ function Medias () {
     const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/medias"
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/medias"
         fetch(url).then(res => res.json()).then(data => {
             setMedias(data)
             setLoading(false)
@@ -47,7 +47,7 @@ function Medias () {
     const handleDelete = (source) => {
         console.log(source)
         // const filename = source.replace("images/", "")
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/medias/delete/" + source
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/medias/delete/" + source
         fetch(url).then(res => res.json()).then(data => {
             if (data.status === "success") {
                 let mediaList = [...medias]

@@ -25,7 +25,7 @@ function Slides (sources) {
   const slides = [];
   
   for (let i=0; i < sources.length; i++) {
-    const url = "http://portfolio-photographie-api.herokuapp.com/images/" + sources[i].src
+    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + sources[i].src
     slides.push(
       <SwiperSlide key={i}>
         <img src={url} alt={""}></img>
@@ -131,7 +131,7 @@ function ImageMarkup ({element, classIndex, index, onImageClick}) {
     }
   }
   const imageClass = "img-" + (classIndex + 1)
-  const url = "http://portfolio-photographie-api.herokuapp.com/images/" + element.src
+  const url = "https://portfolio-photographie-api.herokuapp.com/images/" + element.src
   const imageStyle = {
       backgroundImage: 'url(' + url + ')'
   }
@@ -203,7 +203,7 @@ function Gallery({galleryTitle}) {
   // const SOURCES = buildSources(picsumStartId, numberOfImages)
 
   React.useEffect(() => {
-    const url = "http://portfolio-photographie-api.herokuapp.com/api/gallery/" + galleryTitle
+    const url = "https://portfolio-photographie-api.herokuapp.com/api/gallery/" + galleryTitle
     fetch(url).then(res => res.json()).then(data => {
       setSources(data)
       setLoading(false)

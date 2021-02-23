@@ -34,7 +34,7 @@ function HeaderBlock ({title, description, cover, onHeadersChange, onSave, onCan
     }
     let image_url = ""
     if (cover) {
-        image_url = "http://portfolio-photographie-api.herokuapp.com/images/" + cover
+        image_url = "https://portfolio-photographie-api.herokuapp.com/images/" + cover
     }
 
     return <div className="editor-header">
@@ -69,7 +69,7 @@ function ImageBlock ({img_url, isGallery, onAdd, onRemove}) {
     const handleRemove = () => {
         onRemove(img_url)
     }
-    const url = "http://portfolio-photographie-api.herokuapp.com/images/" + img_url
+    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + img_url
     return <div className="image-item">
         <img src={url} alt="Gallery image"/>
         {!isGallery && <button className="btn btn-info" onClick={handleAdd}>Add</button>}
@@ -103,7 +103,7 @@ function GalleryEditor ({title, onCancel}) {
     const [loading, setLoading] = React.useState(false)
 
     React.useEffect(() => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/gallery/" + title
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/gallery/" + title
         fetch(url).then(res => res.json()).then(data => {
             let sources = [] 
             data.forEach(img => {
@@ -113,14 +113,14 @@ function GalleryEditor ({title, onCancel}) {
         });
     }, []);
     React.useEffect(() => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/galleryInfo/" + title
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/galleryInfo/" + title
         fetch(url).then(res => res.json()).then(data => {
             setDescription(data.description)
             setCover(data.firstImage)
         });
     }, []);
     React.useEffect(() => {
-        const url = "http://portfolio-photographie-api.herokuapp.com/api/medias"
+        const url = "https://portfolio-photographie-api.herokuapp.com/api/medias"
         fetch(url).then(res => res.json()).then(data => {
             let sources = [] 
             data.forEach(img => {
@@ -169,7 +169,7 @@ function GalleryEditor ({title, onCancel}) {
         }
         form.append("images", galleryImages)
         request.onreadystatechange = checkStatus
-        request.open("POST", "http://portfolio-photographie-api.herokuapp.com/api/saveGallery")
+        request.open("POST", "https://portfolio-photographie-api.herokuapp.com/api/saveGallery")
         request.send(form)
         console.log("save")
     }
