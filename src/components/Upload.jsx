@@ -90,6 +90,7 @@ class DragAndDrop extends Component {
 function FileUpload () {
   const [rawFiles, setRawFiles] = React.useState([])
   const [fileNames, setFileNames] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
 
   function onDrop (files) {
       let fileList = fileNames
@@ -107,25 +108,39 @@ function FileUpload () {
   }
 
   const handleUpload = () => {
-      let form = new FormData()
-      for (let i = 0; i < rawFiles.length; i++) {
-          form.append(i.toString(), rawFiles[i])
-      }
-      let request = new XMLHttpRequest()
-      request.open("POST", "/api/uploadFile")
-      request.send(form)
+    let request = new XMLHttpRequest()
+    const checkStatus = () => {
+        if (request.readyState < 4) {
+            setLoading(true)
+        } else if (request.readyState == 4) {
+            setFileNames([])
+            setRawFiles([])
+            setLoading(false)
+        }
+    }
+    let form = new FormData()
+    for (let i = 0; i < rawFiles.length; i++) {
+        form.append(i.toString(), rawFiles[i])
+    }
+    
+    request.onreadystatechange = checkStatus
+    request.open("POST", "/api/uploadFile")
+    request.send(form)
   }
-
-  return (<React.Fragment>
-      <div>
-          <DragAndDrop handleDrop={onDrop}>
-              <div id="DropZone" style={{height: 300, width: 600}}>
-                  {fileNames.map((file, i) => {return <div key={i}>{file}</div>})}
-              </div>
-          </DragAndDrop>
-      </div>
-      <button onClick={handleUpload}>Upload Files</button>
-  </React.Fragment>)
+  if (loading) {
+      return <h1>Chargement...</h1>
+  } else {
+    return (<React.Fragment>
+        <div>
+            <DragAndDrop handleDrop={onDrop}>
+                <div id="DropZone" style={{height: 300, width: 600}}>
+                    {fileNames.map((file, i) => {return <div key={i}>{file}</div>})}
+                </div>
+            </DragAndDrop>
+        </div>
+        <button className='btn btn-info' onClick={handleUpload}>Upload Files</button>
+    </React.Fragment>)
+  }
 }
 
 

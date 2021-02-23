@@ -1,6 +1,17 @@
 import * as React from 'react'
 import "./medias.css"
 
+function copyToClipboard(source) {
+    let field = document.createElement("textarea");
+    document.body.appendChild(field);
+    field.value = source;
+    field.select();
+    document.execCommand("copy");
+    document.body.removeChild(field);
+    console.log(source)
+    alert("Url of the image has been copied to clipboard !")
+}
+
 function ImageBlock ({element, onDelete}) {
 
     const handleDeleteClick = (e) => {
@@ -8,9 +19,16 @@ function ImageBlock ({element, onDelete}) {
         e.stopPropagation()
         onDelete(element.src)
     }
+
+    const handleCopyUrl = (e) => {
+        copyToClipboard(element.src)
+    }
+
+    const url = "http://portfolio-photographie-api.herokuapp.com/images/" + element.src
     return <li>
-        <img src={element.src} alt={element.title}/>
-        <a href="#" onClick={handleDeleteClick}><i className="fas fa-times-circle deleteImage"></i></a>
+        <img src={url} alt={element.title}/>
+        <a href="#" onClick={handleDeleteClick} title="Delete Image"><i className="fas fa-times-circle"></i></a>
+        <a href="#" onClick={handleCopyUrl} title="Copy relative link to clipboard"><i className="fas fa-copy"></i></a>
     </li>
 }
 
@@ -28,8 +46,8 @@ function Medias () {
 
     const handleDelete = (source) => {
         console.log(source)
-        const filename = source.replace("images/", "")
-        const url = "/api/medias/delete/" + filename
+        // const filename = source.replace("images/", "")
+        const url = "/api/medias/delete/" + source
         fetch(url).then(res => res.json()).then(data => {
             if (data.status === "success") {
                 let mediaList = [...medias]
@@ -57,7 +75,7 @@ function Medias () {
         medias.forEach((img, i) => {
             imagesLi.push(<ImageBlock key={i} element={img} onDelete={handleDelete}/>)
         })
-        return <div><h1>Les médias</h1>
+        return <div><h1>Medias</h1>
             <ul id="MediasList">
                 {imagesLi}
             </ul>

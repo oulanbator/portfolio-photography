@@ -10,7 +10,9 @@ import Home from './components/Home';
 import Gallery from './components/Gallery';
 import Upload from './components/Upload';
 import Medias from './components/Medias';
+import Manager from './components/GalleryManager';
 import './styles.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (
@@ -34,6 +36,12 @@ function App() {
                         </NavLink>
                         <NavLink 
                             className="nav-link"
+                            to="/galleryManager" 
+                            activeClassName="active">
+                            Gallery Manager
+                        </NavLink>
+                        <NavLink 
+                            className="nav-link"
                             to="/medias" 
                             activeClassName="active">
                             Medias
@@ -49,7 +57,10 @@ function App() {
             </header>
             <Switch>
                 <Route path="/gallery">
-                    <Gallery galleryTitle="Mariages"/>
+                    <Gallery galleryTitle="Affiches"/>
+                </Route>
+                <Route path="/galleryManager">
+                    <Manager />
                 </Route>
                 <Route path="/upload">
                     <Upload />

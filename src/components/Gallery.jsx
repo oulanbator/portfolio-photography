@@ -23,10 +23,12 @@ function buildSources (startId, numberOfImages) {
 // Build lightbox : developped with Swiper JS
 function Slides (sources) {
   const slides = [];
+  
   for (let i=0; i < sources.length; i++) {
+    const url = "http://portfolio-photographie-api.herokuapp.com/images/" + sources[i].src
     slides.push(
       <SwiperSlide key={i}>
-        <img src={sources[i].src} alt={""}></img>
+        <img src={url} alt={""}></img>
       </SwiperSlide> 
     );
   }
@@ -65,17 +67,6 @@ function SwiperBox ({sources, activeIndex, onCloseCall}) {
 
 // Map Gallery Grip and build HTML markup for : images, blocks, gallery
 function galleryMapper (sources) {
-  // define number of blocs for map
-  let map = {b8: 0, b4: 0, b2: 0, b1: 0}
-  // Count 8 blocks and push to map
-  map.b8 = Math.trunc(sources.length / 8)
-  // If images left >= 4 add one 4block to map
-  if (imagesLeft(sources, map) >= 4) {map.b4 = 1}
-  // If images left >= 2, add one 2block to map
-  if (imagesLeft(sources, map) >= 2) {map.b2 = 1}
-  // If images left >= 1, add one 1block to map
-  if (imagesLeft(sources, map) >= 1) {map.b1 = 1}
-  // Function : Count mapped images, return images left to map
   function imagesLeft (sources, map) {
       const b8 = map.b8 * 8
       const b4 = map.b4 * 4
@@ -84,6 +75,19 @@ function galleryMapper (sources) {
       const totalMappedCount = b8 + b4 + b2 + b1
       const imgLeft = sources.length - totalMappedCount
       return imgLeft
+  }
+  // define number of blocs for map
+  let map = {b8: 0, b4: 0, b2: 0, b1: 0}
+  if (sources.length > 0) {
+    // Count 8 blocks and push to map
+    map.b8 = Math.trunc(sources.length / 8)
+    // If images left >= 4 add one 4block to map
+    if (imagesLeft(sources, map) >= 4) {map.b4 = 1}
+    // If images left >= 2, add one 2block to map
+    if (imagesLeft(sources, map) >= 2) {map.b2 = 1}
+    // If images left >= 1, add one 1block to map
+    if (imagesLeft(sources, map) >= 1) {map.b1 = 1}
+    // Function : Count mapped images, return images left to map
   }
   return map
 }
@@ -127,10 +131,12 @@ function ImageMarkup ({element, classIndex, index, onImageClick}) {
     }
   }
   const imageClass = "img-" + (classIndex + 1)
+  const url = "http://portfolio-photographie-api.herokuapp.com/images/" + element.src
   const imageStyle = {
-      backgroundImage: 'url(' + element.src + ')'
+      backgroundImage: 'url(' + url + ')'
   }
-  return <a href={element.src} 
+  console.log(url)
+  return <a href={url}
             className={imageClass} 
             style={imageStyle} 
             key={index} 
