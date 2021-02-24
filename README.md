@@ -8,6 +8,10 @@ My first React project. Designed to be simple, for the user and for the admnisit
 * A minimal editor for the galleries
 * Served by a separated API, with SQLite database and different endpoints to interact. Check my other repository () for more information.
 
+# Heroku Demo
+This project is currently deployed on a Heroku server. You can check it here :
+> https://portfolio-photographie.herokuapp.com/
+
 # Minimal Setup Example
 
 To build some examples locally, clone this repository :
