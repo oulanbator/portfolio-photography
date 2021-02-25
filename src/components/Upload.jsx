@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {Loading, RootUrl} from './Utils'
 import "../styles.css"
 
+const ROOT_URL = RootUrl()
 
 class DragAndDrop extends Component {
   dropRef = React.createRef()
@@ -124,11 +126,11 @@ function FileUpload () {
     }
     
     request.onreadystatechange = checkStatus
-    request.open("POST", "https://portfolio-photographie-api.herokuapp.com/api/uploadFile")
+    request.open("POST", ROOT_URL + "api/uploadFile")
     request.send(form)
   }
   if (loading) {
-      return <h1>Chargement...</h1>
+      return <Loading/>
   } else {
     return (<React.Fragment>
         <div>

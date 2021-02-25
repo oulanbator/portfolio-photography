@@ -1,0 +1,113 @@
+/* GALLERY MANAGER */
+#GalleryList {
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
+    grid-template-columns : 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 245px;
+    grid-gap: 10px;
+    list-style: none;
+}
+    
+.GalleryItem {
+    /* background-color: red; */
+    width: 100%;
+    height: 150px;
+    /* padding: 10px; */
+    overflow: hidden;
+    display: inline-table;  
+    box-shadow: 5px 5px 40px rgba(0, 0, 0, .8);
+}
+.GalleryItem img {
+    width: 100%;
+    height: 150px;
+}
+.gallery-body{
+    background-color: rgba(0, 0, 0, .6);
+    padding : 10px 10px;
+}
+.gallery-body a {
+    text-align: center;
+    width: 40%;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+#AddNewButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#AddNewButton a{
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 5px 40px black;
+}
+#AddNewButton a i{
+    font-size: 3em;
+}
+.modal-content{
+    color: black;
+}
+
+@media screen and (max-width: 900px) {
+    #GalleryList {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns : 1fr 1fr;
+        grid-auto-rows: 340px;
+    }
+    .GalleryItem {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        display: inline-table;  
+        box-shadow: 5px 5px 40px rgba(0, 0, 0, .8);
+    }
+    .GalleryItem img {
+        width: 100%;
+        height: 250px;
+    }
+    #AddNewButton {
+        margin-bottom: 50px;
+    }
+    #AddNewButton a {
+        width: 100%;
+        height: 250px;
+        margin-bottom: 30px;
+    }
+    #AddNewButton a i{
+        font-size: 4em;
+    }
+    #AddNewButton a h2{
+        margin-top: 30px;
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    #GalleryList {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns : 1fr;
+        grid-auto-rows: 450px;
+    }
+    .GalleryItem {
+        width: 100%;
+        height: 400px;
+    }
+    .GalleryItem img {
+        width: 100%;
+        height: 350px;
+    }
+    #AddNewButton {
+        margin-bottom: 60px;
+    }
+    #AddNewButton a {
+        width: 100%;
+        height: 350px;
+    }
+    #AddNewButton a i{
+        font-size: 4em;
+    }
+    #AddNewButton a h2{
+        margin-top: 30px;
+        font-size: 4em;
+    }
+}

@@ -2,22 +2,23 @@ import * as React from 'react'
 import GalleryEditor from './GalleryEditor'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import './gallery.css'
+import {Loading, RootUrl} from './Utils'
+import './manager.css'
 export default Manager;
+
+const ROOT_URL = RootUrl()
 
 function NewGalleryButton ({onNewGallery}) {
     const handleClick = (e) => {
         e.preventDefault()
         onNewGallery()
     }
-    return <li>
-        <div id="AddNewButton">
-            <a href="#" className="btn btn-info" onClick={handleClick}>
+    return <div id="AddNewButton">
+            <a href="#" className="btn btn-outline-warning" onClick={handleClick}>
                 <h2>Add new Gallery</h2>
-                <h2><i className="fas fa-plus deleteImage"></i></h2>
+                <i className="fas fa-plus"></i>
             </a>
         </div>
-    </li>
 }
 
 function GalleryBlock ({source, onDelete, onEdit}) {
@@ -30,16 +31,16 @@ function GalleryBlock ({source, onDelete, onEdit}) {
         onEdit(source.title)
     }
     // console.log(source)
-    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + source.firstImage
+    const url = ROOT_URL + "images/" + source.firstImage
     const altText = "Gallery " + source.title + " - Cover Thumbnail"
-    return <li>
+    return <div className="GalleryItem">
             <img src={url} alt={altText} />
             <div className="gallery-body">
                 <h5>{source.title}</h5>
                 <a href="#" className="btn btn-warning" onClick={handleEdit}>Edit</a>
                 <a href="#" className="btn btn-danger" onClick={handleDelete}>Delete</a>
             </div>
-        </li>
+        </div>
 }
 
 function Manager () {
@@ -51,13 +52,13 @@ function Manager () {
         // Modal
     const [show, setShow] = React.useState(false);
     const [titleValue, setTitleValue] = React.useState('')
-    const [imageValue, setImageValue] = React.useState('')
+    // const [imageValue, setImageValue] = React.useState('')
         // Editor
     const [showEditor, setShowEditor] = React.useState(false)
 
     //  COMPONENT MOUNT
     React.useEffect(() => {
-        const url = "https://portfolio-photographie-api.herokuapp.com/api/galleries"
+        const url = ROOT_URL + "api/galleries"
         fetch(url).then(res => res.json()).then(data => {
             setGalleries(data)
             setLoading(false)
@@ -67,20 +68,23 @@ function Manager () {
     // HANDLERS
         // Modal
     const onTitleChange = (e) => setTitleValue(e.target.value);
-    const onImageChange = (e) => setImageValue(e.target.value);
+    // const onImageChange = (e) => setImageValue(e.target.value);
     const handleShow = () => setShow(true);
     const handleClose = () => {
+        // On modal close, reset the states of title and image fields
         setTitleValue('')
-        setImageValue('')
+        // setImageValue('')
         setShow(false);
     }
         // Global
     const handleCreateNewGallery = () => {
-        const url = "https://portfolio-photographie-api.herokuapp.com/api/createGallery?title=" + titleValue + "&firstImage=" + imageValue
-        handleClose()
+        const url = ROOT_URL + "api/createGallery?title=" + titleValue
+        // On validate modal, fetch API endpoint
         fetch(url).then(res => res.json()).then(data => {
-            console.log(data.status)
+            // if API returns success, close modal and reload state, else alert
+            const response = JSON.stringify(data)
             if (data.status === "success") {
+                handleClose()
                 setReload(c => c + 1)
             } else if (data.status === "aborted") {
                 alert('Aborted : this gallery title is already used.')
@@ -88,9 +92,9 @@ function Manager () {
         });
     }
     const handleDeleteGallery = (title) => {
-        const url = "https://portfolio-photographie-api.herokuapp.com/api/deleteGallery/" + title
+        const url = ROOT_URL + "api/deleteGallery/" + title
         fetch(url).then(res => res.json()).then(data => {
-            console.log(data.status)
+            // if API returns success, reload state
             if (data.status === "success") {
                 setReload(c => c + 1)
             } else if (data.status === "aborted") {
@@ -105,10 +109,9 @@ function Manager () {
         setShowEditor(false)
         setReload(c => c + 1)
     }
-
     // RENDER
     if (loading) {
-        return <h1>Chargement...</h1>
+        return <Loading/>
     } else {
         const galleryLi = []
         galleries.forEach((gallery, i) => {
@@ -120,15 +123,15 @@ function Manager () {
         return <React.Fragment>
                 {(!showEditor) && <div>
                     <h1>Gallery Manager</h1>
-                    <ul id="GalleryList">
+                    <div id="GalleryList">
                         {galleryLi}
                         <NewGalleryButton onNewGallery={handleShow}/>
-                    </ul>
+                    </div>
                 </div>}
                 {(showEditor) && <GalleryEditor title={showEditor} onCancel={handleCloseEditor}/>}
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>Add new Gallery</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                     <div className="form-group mb-4">
@@ -138,15 +141,6 @@ function Manager () {
                             name="new_gallery_title" 
                             value={titleValue} 
                             onChange={onTitleChange} 
-                            className="form-control" />
-                    </div>
-                    <div className="form-group mb-4">
-                        <label htmlFor="new_gallery_image" className="form-label">Gallery Cover Image</label>
-                        <input type="text" 
-                            id="new_gallery_image" 
-                            name="new_gallery_image" 
-                            value={imageValue} 
-                            onChange={onImageChange} 
                             className="form-control" />
                     </div>
                     </Modal.Body>

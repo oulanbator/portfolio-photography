@@ -1,11 +1,14 @@
 import * as React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {Navigation, Keyboard} from 'swiper';
+import {Loading, RootUrl} from './Utils'
 import "swiper/swiper-bundle.min.css";
 import './gallery.css';
 export default Gallery;
 
 SwiperCore.use([Navigation, Keyboard])
+
+const ROOT_URL = RootUrl()
 
 // Function that loads source images from PicSum for Demo
 function buildSources (startId, numberOfImages) {
@@ -25,7 +28,7 @@ function Slides (sources) {
   const slides = [];
   
   for (let i=0; i < sources.length; i++) {
-    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + sources[i].src
+    const url = ROOT_URL + "images/" + sources[i].src
     slides.push(
       <SwiperSlide key={i}>
         <img src={url} alt={""}></img>
@@ -131,7 +134,7 @@ function ImageMarkup ({element, classIndex, index, onImageClick}) {
     }
   }
   const imageClass = "img-" + (classIndex + 1)
-  const url = "https://portfolio-photographie-api.herokuapp.com/images/" + element.src
+  const url = ROOT_URL + "images/" + element.src
   const imageStyle = {
       backgroundImage: 'url(' + url + ')'
   }
@@ -203,7 +206,7 @@ function Gallery({galleryTitle}) {
   // const SOURCES = buildSources(picsumStartId, numberOfImages)
 
   React.useEffect(() => {
-    const url = "https://portfolio-photographie-api.herokuapp.com/api/gallery/" + galleryTitle
+    const url = ROOT_URL + "api/gallery/" + galleryTitle
     fetch(url).then(res => res.json()).then(data => {
       setSources(data)
       setLoading(false)
@@ -220,7 +223,7 @@ function Gallery({galleryTitle}) {
   }
 
   if (loading) {
-    return <h1>Chargement...</h1>
+    return <Loading/>
   } else {
     return <div>
       { displaySwiper && (<SwiperBox 

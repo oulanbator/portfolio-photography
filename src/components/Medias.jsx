@@ -1,5 +1,8 @@
 import * as React from 'react'
+import {Loading, RootUrl} from './Utils'
 import "./medias.css"
+
+const ROOT_URL = RootUrl()
 
 function copyToClipboard(source) {
     let field = document.createElement("textarea");
@@ -24,11 +27,10 @@ function ImageBlock ({element, onDelete}) {
         copyToClipboard(element.src)
     }
 
-    const url = "https://portfolio-photographie-api.herokuapp.com/images/" + element.src
+    const url = ROOT_URL + "images/" + element.src
     return <li>
         <img src={url} alt={element.title}/>
         <a href="#" onClick={handleDeleteClick} title="Delete Image"><i className="fas fa-times-circle"></i></a>
-        <a href="#" onClick={handleCopyUrl} title="Copy relative link to clipboard"><i className="fas fa-copy"></i></a>
     </li>
 }
 
@@ -37,7 +39,7 @@ function Medias () {
     const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
-        const url = "https://portfolio-photographie-api.herokuapp.com/api/medias"
+        const url = ROOT_URL + "api/medias"
         fetch(url).then(res => res.json()).then(data => {
             setMedias(data)
             setLoading(false)
@@ -47,7 +49,7 @@ function Medias () {
     const handleDelete = (source) => {
         console.log(source)
         // const filename = source.replace("images/", "")
-        const url = "https://portfolio-photographie-api.herokuapp.com/api/medias/delete/" + source
+        const url = ROOT_URL + "api/medias/delete/" + source
         fetch(url).then(res => res.json()).then(data => {
             if (data.status === "success") {
                 let mediaList = [...medias]
@@ -69,7 +71,7 @@ function Medias () {
     }
 
     if (loading) {
-        return <h1>Chargement...</h1>
+        return <Loading/>
     } else {
         const imagesLi = []
         medias.forEach((img, i) => {
