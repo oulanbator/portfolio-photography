@@ -4,7 +4,7 @@
     list-style: none;
     flex-wrap: wrap;
 }
-#MediasList li{
+#MediasList div{
     position: relative;
     display: inline-block;
     width: calc(100% / 4);
@@ -12,27 +12,22 @@
     padding-right: 3px;
     padding-bottom: 3px;
 }
-#MediasList li a:nth-of-type(1) {
+#MediasList div a:nth-of-type(1) {
     position: absolute;
     top: 0;
     right: 5px;
     z-index: 100;
     font-size: large;
 }
-#MediasList li a:nth-of-type(1) i{
+#MediasList div a:nth-of-type(1) i{
     color: rgba(255, 17, 0, 0.863);
 }
-/* #MediasList li a:nth-of-type(2) {
-    position: absolute;
-    top: 25px;
-    right: 6px;
-    z-index: 100;
-    font-size: large;
-}
-#MediasList li a:nth-of-type(2) i{
-    color: rgba(255, 238, 2, 0.966);
-} */
-#MediasList li img{
+#MediasList div img{
     width: 100%;
     height: auto;
+}
+@media screen and (max-width: 600px) {
+    #MediasList div{
+        width: calc(100% / 2);
+    }
 }

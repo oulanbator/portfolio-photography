@@ -28,10 +28,10 @@ function ImageBlock ({element, onDelete}) {
     }
 
     const url = ROOT_URL + "images/" + element.src
-    return <li>
+    return <div>
         <img src={url} alt={element.title}/>
         <a href="#" onClick={handleDeleteClick} title="Delete Image"><i className="fas fa-times-circle"></i></a>
-    </li>
+    </div>
 }
 
 function Medias () {
@@ -78,9 +78,9 @@ function Medias () {
             imagesLi.push(<ImageBlock key={i} element={img} onDelete={handleDelete}/>)
         })
         return <div><h1>Medias</h1>
-            <ul id="MediasList">
+            <div id="MediasList">
                 {imagesLi}
-            </ul>
+            </div>
         </div>
     }
 }

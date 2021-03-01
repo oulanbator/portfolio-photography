@@ -90,59 +90,76 @@ class DragAndDrop extends Component {
   }
 
 function FileUpload () {
-  const [rawFiles, setRawFiles] = React.useState([])
-  const [fileNames, setFileNames] = React.useState([])
-  const [loading, setLoading] = React.useState(false)
+    const [rawFiles, setRawFiles] = React.useState([])
+    const [fileNames, setFileNames] = React.useState([])
+    const [loading, setLoading] = React.useState(false)
 
-  function onDrop (files) {
-      let fileList = fileNames
-      let rawFileList = rawFiles
-      for (let i = 0; i < files.length; i++) {
-          fileList.push(files[i].name) 
-          rawFileList.push(files[i])
-          // if (!files[i].name) {
-          //     fileList.push(files[i].name) 
-          //     rawFileList.push(files[i])
-          // }
-      }
-      setFileNames([...fileList])
-      setRawFiles([...rawFileList])
-  }
-
-  const handleUpload = () => {
-    let request = new XMLHttpRequest()
-    const checkStatus = () => {
-        if (request.readyState < 4) {
-            setLoading(true)
-        } else if (request.readyState == 4) {
-            setFileNames([])
-            setRawFiles([])
-            setLoading(false)
+    const onFilesSelected = (e) => {
+        console.log(e.target.files)
+        const selectedFiles = e.target.files
+        let fileList = fileNames
+        let rawFileList = rawFiles
+        for (let i = 0; i < selectedFiles.length; i++) {
+            fileList.push(selectedFiles[i].name) 
+            rawFileList.push(selectedFiles[i])
         }
+        setFileNames([...fileList])
+        setRawFiles([...rawFileList])
     }
-    let form = new FormData()
-    for (let i = 0; i < rawFiles.length; i++) {
-        form.append(i.toString(), rawFiles[i])
+    const onDrop = (files) => {
+        let fileList = fileNames
+        let rawFileList = rawFiles
+        for (let i = 0; i < files.length; i++) {
+            fileList.push(files[i].name) 
+            rawFileList.push(files[i])
+            // if (!files[i].name) {
+            //     fileList.push(files[i].name) 
+            //     rawFileList.push(files[i])
+            // }
+        }
+        setFileNames([...fileList])
+        setRawFiles([...rawFileList])
     }
-    
-    request.onreadystatechange = checkStatus
-    request.open("POST", ROOT_URL + "api/uploadFile")
-    request.send(form)
-  }
-  if (loading) {
-      return <Loading/>
-  } else {
-    return (<React.Fragment>
-        <div>
-            <DragAndDrop handleDrop={onDrop}>
-                <div id="DropZone" style={{height: 300, width: 600}}>
-                    {fileNames.map((file, i) => {return <div key={i}>{file}</div>})}
-                </div>
-            </DragAndDrop>
-        </div>
-        <button className='btn btn-info' onClick={handleUpload}>Upload Files</button>
-    </React.Fragment>)
-  }
+
+    const handleUpload = () => {
+        let request = new XMLHttpRequest()
+        const checkStatus = () => {
+            if (request.readyState < 4) {
+                setLoading(true)
+            } else if (request.readyState == 4) {
+                setFileNames([])
+                setRawFiles([])
+                setLoading(false)
+            }
+        }
+        let form = new FormData()
+        for (let i = 0; i < rawFiles.length; i++) {
+            form.append(i.toString(), rawFiles[i])
+        }
+        
+        request.onreadystatechange = checkStatus
+        request.open("POST", ROOT_URL + "api/uploadFile")
+        request.send(form)
+    }
+    if (loading) {
+        return <Loading/>
+    } else {
+        return (<React.Fragment>
+            <div id="file-select">
+                <button className="btn btn-outline-info">Select files</button>
+                <input type="file" multiple onChange={onFilesSelected}/>
+            </div>
+            <button className='btn btn-info' onClick={handleUpload}>Upload Files</button>
+            <h1>(or drag files here below)</h1>
+            <div>
+                <DragAndDrop handleDrop={onDrop}>
+                    <div id="DropZone" style={{height: 300, width: 600}}>
+                        {fileNames.map((file, i) => {return <div key={i}>{file}</div>})}
+                    </div>
+                </DragAndDrop>
+            </div>
+        </React.Fragment>)
+    }
 }
 
 
@@ -150,7 +167,6 @@ class Upload extends Component {
   render() {
     return (
       <div className="Upload">
-        <h1>Drag Files Here</h1>
         <FileUpload />
       </div>
     )
