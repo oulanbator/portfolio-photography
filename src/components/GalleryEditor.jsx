@@ -1,57 +1,9 @@
 import * as React from 'react'
-import "./editor.css"
+import "./galleryEditor.css"
 import {RootUrl} from "./Utils"
 export default GalleryEditor;
 
 const ROOT_URL = RootUrl()
-
-// function HeaderBlock ({title, description, cover, onHeadersChange, onSave, onCancel, mediasList}) {
-//     const handleTitleChange = (e) => {
-//         const header = "title"
-//         onHeadersChange(header, e)
-//     }
-//     const handleImageChange = (e) => {
-//         const header = "image"
-//         onHeadersChange(header, e)
-//     }
-//     const handleDescriptionChange = (e) => {
-//         const header = "description"
-//         onHeadersChange(header, e)
-//     }
-//     const handleSave = (e) => {
-//         onSave()
-//     }
-//     const handleCancel = (e) => {
-//         onCancel()
-//     }
-//     let image_url = ""
-//     if (mediasList.indexOf(cover) > -1) {
-//         image_url = ROOT_URL + "images/" + cover
-//     } else {
-//         image_url = ROOT_URL + "images/default.png"
-//     }
-
-//     return <div className="editor-header">
-//         <h2>Gallery Editor</h2>
-//         <span className="row">
-//             <button className="btn btn-secondary" onClick={handleCancel}>Cancel</button>
-//             <button className="btn btn-success" onClick={handleSave}>Save Changes</button>
-//         </span>
-//         <div className="row">
-//             <div className="imageBloc">
-//                 <img src={image_url} alt=""/>
-//             </div>
-//             <form>
-//                 <label htmlFor="title" className="form-label">Title</label>
-//                 <input className="form-control" id="title" type="text" value={title} onChange={handleTitleChange}/>
-//                 <label htmlFor="image-url" className="form-label">Image Url</label>
-//                 <input className="form-control" id="image-url" type="text" value={cover} onChange={handleImageChange}/>
-//                 <label htmlFor="description" className="form-label">Description</label>
-//                 <textarea className="form-control" id="description" rows="3" value={description} onChange={handleDescriptionChange}></textarea>
-//             </form>
-//         </div>
-//     </div>
-// }
 
 function HeaderBlock ({title, description, cover, onHeadersChange, onSave, onCancel, mediasList}) {
     const handleTitleChange = (e) => {

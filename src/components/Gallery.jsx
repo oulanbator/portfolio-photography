@@ -1,7 +1,7 @@
 import * as React from 'react'
+import {Loading, RootUrl} from './Utils'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, {Navigation, Keyboard} from 'swiper';
-import {Loading, RootUrl} from './Utils'
 import "swiper/swiper-bundle.min.css";
 import './gallery.css';
 export default Gallery;

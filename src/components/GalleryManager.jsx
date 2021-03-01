@@ -3,7 +3,7 @@ import GalleryEditor from './GalleryEditor'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {Loading, RootUrl} from './Utils'
-import './manager.css'
+import './galleryManager.css'
 export default Manager;
 
 const ROOT_URL = RootUrl()

@@ -1,25 +1,6 @@
 /* CUSTOM CSS */
 
-#DropZone {
-  margin-bottom: 2rem;
-}
 
-.Upload h1 {
-  color: grey;
-}
-#file-select {
-  display: inline-flex;
-  position: relative;
-  overflow: hidden;
-  margin-right: 40px;
-}
-#file-select input[type=file] {
-  left: 0;
-  top: 0;
-  opacity: 0;
-  position: absolute;
-  font-size: 90px;
-}
 
 .Home {
   color: red;
