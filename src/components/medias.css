@@ -1,33 +1,104 @@
-#MediasList{
-    width: 100%;
-    display: flex;
-    list-style: none;
-    flex-wrap: wrap;
+.swiper-button-next,
+.swiper-button-prev{
+    color:white;
 }
-#MediasList div{
-    position: relative;
-    display: inline-block;
-    width: calc(100% / 4);
-    text-align: center;
-    padding-right: 3px;
-    padding-bottom: 3px;
-}
-#MediasList div a:nth-of-type(1) {
-    position: absolute;
+#swiper-modal{
+    z-index: 200;
+    position: fixed;
     top: 0;
-    right: 5px;
-    z-index: 100;
-    font-size: large;
-}
-#MediasList div a:nth-of-type(1) i{
-    color: rgba(255, 17, 0, 0.863);
-}
-#MediasList div img{
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    background-color: rgba(47, 44, 49, 0.85);
+    display: grid;
+    place-items: center;
+}
+.swiper-container{
+    width: 90%;
+}
+.swiper-slide {
+    text-align: center;
+}
+.swiper-slide img{
+    top: 1vh;
+    /* Needs to be 100% INSIDE the viewport for keyboard control to work */
+    max-height: 98vh;
+    max-width: 98%;
+}
+.mediasModalTools{
+    position:absolute;
+    z-index: 300;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    
+}
+.mediasModalTools a {
+    text-decoration: none;
+    margin: 10px 10px;
+    font-size: 2em;
+}
+.mediasModalTools .fa-times-circle {
+    color: whitesmoke;
+}
+.mediasModalTools .fa-redo {
+    color: yellow;
+}
+.mediasModalTools .fa-trash {
+    color: orangered
+}
+
+
+/* IMAGE LIST */
+.media-image-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns : 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 150px;
+    grid-gap: 8px;
+    list-style: none;
+    margin-bottom: 40px;
+}
+.media-image-item {
+    height: 150px;
+    max-height: 150px;
+    position:relative;
+}
+.media-image-item img {
+    width: 100%;
+    height: 150px;
+}
+.media-image-hover {
+    display: none;
+}
+.media-image-item a:hover .media-image-hover {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 100;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    color: rgba(255,255,255, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+}
+
+@media screen and (max-width: 800px) {
+    .media-image-list {
+        grid-template-columns : 1fr 1fr 1fr;
+    }
 }
 @media screen and (max-width: 600px) {
-    #MediasList div{
-        width: calc(100% / 2);
+    .media-image-list {
+        grid-template-columns : 1fr 1fr;
     }
 }

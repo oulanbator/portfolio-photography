@@ -45,7 +45,7 @@ function Closer ({onCloseCall}) {
   return <i className="fas fa-times" id="closebox" onClick={handleClose}></i>
 }
 
-function SwiperBox ({sources, activeIndex, onCloseCall}) {
+const SwiperBox = ({sources, activeIndex, onCloseCall}) => {
   const slides = Slides(sources)
 
   const handleClose = () => {
